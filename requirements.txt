@@ -4,3 +4,4 @@ osmnx
 fpdf
 requests
 setuptools<70.0.0
+ipython
