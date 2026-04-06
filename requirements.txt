@@ -1,6 +1,5 @@
 streamlit
-geemap
-python-box<7.0.0
+geemap>=0.38.0
 osmnx
 fpdf
 requests
