@@ -80,13 +80,14 @@ row2_col1.metric("Optical Verification", "MSI (10m Res)")
 row2_col2.metric("Phenological Filter", "ACTIVE (NDVI Δ)")
 st.markdown("---")
 
-# Authenticate Earth Engine (Dynamic Local/Cloud Routing)
+# Authenticate Earth Engine
 try:
     if "gcp_service_account" in st.secrets:
-        # CLOUD DEPLOYMENT ROUTE: Use injected Service Account Credentials
-        creds = ee.ServiceAccountCredentials(
-            st.secrets["gcp_service_account"]["client_email"],
-            st.secrets["gcp_service_account"]["private_key"]
+        # CLOUD DEPLOYMENT ROUTE: Secure memory injection
+        key_dict = dict(st.secrets["gcp_service_account"])
+        creds = service_account.Credentials.from_service_account_info(
+            key_dict,
+            scopes=['https://www.googleapis.com/auth/earthengine']
         )
         ee.Initialize(credentials=creds, project='localqol')
     else:
