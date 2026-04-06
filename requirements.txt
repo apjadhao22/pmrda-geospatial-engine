@@ -3,4 +3,4 @@ geemap==0.35.0
 osmnx
 fpdf
 requests
-setuptools
+setuptools<70.0.0
