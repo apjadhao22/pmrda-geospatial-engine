@@ -1,6 +1,5 @@
 streamlit
-geemap
-earthengine-api
+geemap==0.35.0
 osmnx
 fpdf
 requests
