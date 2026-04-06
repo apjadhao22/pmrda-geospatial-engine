@@ -90,6 +90,7 @@ try:
             scopes=['https://www.googleapis.com/auth/earthengine']
         )
         ee.Initialize(credentials=creds, project='localqol')
+        ee.data._credentials = creds  # MONKEY-PATCH: Forces geemap to recognize the cloud credentials
     else:
         # LOCAL MAC ROUTE: Fallback to terminal authentication
         ee.Initialize(project='localqol')
@@ -237,7 +238,8 @@ if run_btn:
         tab1, tab2 = st.tabs(["GEOSPATIAL RENDER", "VECTOR EXTRACTION LOG"])
         
         with tab1:
-            Map = geemap.Map(center=[lat, lon], zoom=14)
+            # ee_initialize=False OVERRIDE: Prevents the map from triggering the legacy auth check
+            Map = geemap.Map(center=[lat, lon], zoom=14, ee_initialize=False)
             Map.addLayer(final_alerts.eq(1).selfMask(), {'palette': 'orange'}, 'Pre-Construction (Land Clearing)')
             Map.addLayer(final_alerts.eq(2).selfMask(), {'palette': 'red'}, 'Confirmed Vertical Structure')
             if osm_ee:
